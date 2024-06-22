@@ -42,7 +42,7 @@ for i in np.arange(len(parts)):
     adata = adata_[cells].copy()
     batch='B{}'.format(i+1)
 
-    print(f'{batch} /{len(parts)}    size ' + '{}'.format(adata.shape))
+    print(f'{batch} / {len(parts)}    size ' + '{}'.format(adata.shape))
     
     sc.pp.normalize_total(adata, target_sum=target_sum)
     sc.pp.log1p(adata)
@@ -53,5 +53,5 @@ for i in np.arange(len(parts)):
     adata.obs_names.to_frame().to_csv(f'multiome_neurips21_{batch}_cell.csv.gz', index=None)
     adata.var_names.to_frame().to_csv(f'multiome_neurips21_{batch}_gene.csv.gz', index=None)
 
-    enc = OneHotEncoder(sparse_output=False).fit(adata.obs['Batch'].to_numpy().reshape(-1,1))
-    pd.DataFrame(enc.transform(adata.obs['Batch'].to_numpy().reshape(-1,1)), columns=enc.categories_).to_csv(f'multiome_neurips21_{batch}_uwv.txt.gz', index=False)
+    enc = OneHotEncoder(sparse_output=False).fit(adata.obs['DonorNumber'].to_numpy().reshape(-1,1))
+    pd.DataFrame(enc.transform(adata.obs['DonorNumber'].to_numpy().reshape(-1,1)), columns=enc.categories_).to_csv(f'multiome_neurips21_{batch}_uwv.txt.gz', index=False)
